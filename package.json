@@ -27,9 +27,8 @@
     "mongoose": "^6.9.0"
   },
   "jest": {
-    "testEnvironment": {
       "testEnvironment": "node",
       "globalTeardown": ".test/teardown.js"
     }
   }
-}
+

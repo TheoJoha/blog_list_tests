@@ -34,7 +34,7 @@ blogsRouter.post('/api/blogs', (request, response, next) => {
 })
 
 // delete a blog
-blogsRouter.app.delete('/api/blogs/:id', (request, response, next) => {
+blogsRouter.delete('/api/blogs/:id', (request, response, next) => {
   Blog.findByIdAndRemove(request.params.id)
     .then(result => {
       response.status(204).end()
@@ -43,7 +43,7 @@ blogsRouter.app.delete('/api/blogs/:id', (request, response, next) => {
 })
 
 // update a blog
-blogsRouter.app.put('/api/blogs/:id', (request, response, next) => {
+blogsRouter.put('/api/blogs/:id', (request, response, next) => {
   const body = request.body
 
   const blog = {

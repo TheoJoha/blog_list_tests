@@ -5,8 +5,6 @@ const app = require('../app')
 const api = supertest(app)
 
 const Blog = require('../models/blog')
-newTimeout = 100000
-jest.setTimeout(newTimeout)
 jest.useFakeTimers()
 
 

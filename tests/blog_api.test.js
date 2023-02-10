@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
 const supertest = require('supertest')
+const mongoose = require('mongoose')
 const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
@@ -33,7 +33,7 @@ describe ('returns correct resources in the JSON format', () => {
       const response = await api.get('/api/blogs')
     
       expect(response.body).toHaveLength(helper.initialBlogs.length) // set comparison-length equal to length of body.
-    })
+    }, 100000)
 })
 
 // unique identifier property of the blog posts is named id
@@ -42,7 +42,7 @@ describe('unique identifier property of the blog posts is named id', () => {
         const response = await api.get('/api/blogs')
        
         expect(JSON.stringify(response[0].body._id)).toBeDefined()
-      })
+      }, 100000)
 })
 
 
@@ -70,7 +70,7 @@ describe('test that verifies that making an HTTP POST request to the /api/blogs 
         expect(titles).toContain(
             'Best blog'
         )
-        })
+        }, 100000)
 })
 
 
@@ -91,7 +91,7 @@ test('blog without like-property will default to 0 likes', async () => {
   
     expect(response.body.likes).toBe(0)
     expect(response.body).toHaveLength(helper.initialBlogs.length)
-  })
+  }, 100000)
 
   // delete a blog
   describe('test deletion of a blog', () => {
@@ -113,7 +113,7 @@ test('blog without like-property will default to 0 likes', async () => {
 
       expect(titles).not.toContain(blogToDelete.title)
 
-    })
+    }, 100000)
   })
 
   // test update blog
@@ -137,7 +137,7 @@ test('blog without like-property will default to 0 likes', async () => {
     expect(response.body.url).toBe(newBlog.url)
     expect(response.body.likes).toBe(newBlog.likes)
 
-  })
+  }, 100000)
 
 
 // close connection

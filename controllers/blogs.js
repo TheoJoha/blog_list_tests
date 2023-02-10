@@ -14,8 +14,8 @@ blogsRouter.get('/api/blogs', async (request, response) => {
   response.json(blogs)
 })
 
-// make a nwe blog
-blogsRouter.post('/api/blogs', (request, response, next) => {
+// make a new blog
+blogsRouter.post('/api/blogs', async (request, response, next) => {
   const body = request.body
 
 // respond with bad request if title or url is missing
@@ -27,37 +27,32 @@ blogsRouter.post('/api/blogs', (request, response, next) => {
     likes: body.likes,
   })
 
-  blog.save()
-    .then(savedBlog => {response.status(201).json(savedBlog)
-    })
-    .catch(error => next(error))
+    const savedBlog = await blog.save()
+    response.status(201).json.save(savedBlog)
+
 })
 
 // delete a blog
-blogsRouter.delete('/api/blogs/:id', (request, response, next) => {
-  Blog.findByIdAndRemove(request.params.id)
-    .then(result => {
-      response.status(204).end()
-    })
-    .catch(error => next(error))
+blogsRouter.delete('/api/blogs/:id', async (request, response, next) => {
+    await Blog.findByIdAndRemove(request.params.id)
+    response.status(204).end()
 })
 
 // update a blog
-blogsRouter.put('/api/blogs/:id', (request, response, next) => {
+blogsRouter.put('/api/blogs/:id', async (request, response, next) => {
   const body = request.body
 
-  const blog = {
+  const blog = new Blog({
     title: body.title,
     author: body.author,
     url: body.url,
     likes: body.likes,
-  }
+  })
 
-  Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
-    .then(updatedBlog => {
-      response.json(updatedBlog)
-    })
-    .catch(error => next(error))
+    await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+      response.json(blog)
+    
 })
+
 
 module.exports = blogsRouter

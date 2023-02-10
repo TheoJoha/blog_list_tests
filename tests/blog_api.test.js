@@ -1,75 +1,21 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
+const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
-const Blog = require('../models/blog')
 
-const initialBlogs = [
-    {
-      _id: '5a422a851b54a676234d17f7',
-      title: 'React patterns',
-      author: 'Michael Chan',
-      url: 'https://reactpatterns.com/',
-      likes: 7,
-      __v: 0
-    },
-    {
-      _id: '5a422aa71b54a676234d17f8',
-      title: 'Go To Statement Considered Harmful',
-      author: 'Edsger W. Dijkstra',
-      url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
-      likes: 5,
-      __v: 0
-    },
-    {
-      _id: '5a422b3a1b54a676234d17f9',
-      title: 'Canonical string reduction',
-      author: 'Edsger W. Dijkstra',
-      url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
-      likes: 12,
-      __v: 0
-    },
-    {
-      _id: '5a422b891b54a676234d17fa',
-      title: 'First class tests',
-      author: 'Robert C. Martin',
-      url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
-      likes: 10,
-      __v: 0
-    },
-    {
-      _id: '5a422ba71b54a676234d17fb',
-      title: 'TDD harms architecture',
-      author: 'Robert C. Martin',
-      url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
-      likes: 0,
-      __v: 0
-    },
-    {
-      _id: '5a422bc61b54a676234d17fc',
-      title: 'Type wars',
-      author: 'Robert C. Martin',
-      url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
-      likes: 2,
-      __v: 0
-    }
-  ]
+
 
 beforeEach(async () => {
-await Blog.deleteMany({})
-let blogObject = new Blog(initialBlogs[0])
-await blogObject.save()
-blogObject = new Blog(initialBlogs[1])
-await blogObject.save()
-blogObject = new Blog(initialBlogs[2])
-await blogObject.save()
-blogObject = new Blog(initialBlogs[3])
-await blogObject.save()
-blogObject = new Blog(initialBlogs[4])
-await blogObject.save()
-blogObject = new Blog(initialBlogs[5])
-await blogObject.save()
+  await Blog.deleteMany({})
+  console.log('cleared')
+
+  for (let blog of helper.initialBlogs) {
+    let blogObject = new Blog(blog)
+    await blogObject.save()
+  }
 })
+
 
 describe ('returns correct resources in the JSON format', () => {
   // test that blogs are returned as JSON
@@ -84,7 +30,7 @@ describe ('returns correct resources in the JSON format', () => {
   test('test length of blogs', async () => {
       const response = await api.get('/api/blogs')
     
-      expect(response.body).toHaveLength(initialBlogs.length) // set comparison-length equal to length of body.
+      expect(response.body).toHaveLength(helper.initialBlogs.length) // set comparison-length equal to length of body.
     })
 })
 
@@ -100,7 +46,7 @@ describe('unique identifier property of the blog posts is named id', () => {
 
 // test if a valid blog can be added
 describe('test that verifies that making an HTTP POST request to the /api/blogs URL successfully creates a new blog post', () => {
-    test('a valid note can be added', async () => {
+    test('a valid blog can be added', async () => {
         const newBlog = {
             title: "Best blog",
             author: "Best Blogger",
@@ -118,7 +64,7 @@ describe('test that verifies that making an HTTP POST request to the /api/blogs 
         
         const titles = response.body.map(r => r.title)
         
-        expect(response.body).toHaveLength(initialBlogs.length + 1)
+        expect(response.body).toHaveLength(helper.initialBlogs.length + 1)
         expect(titles).toContain(
             'Best blog'
         )
@@ -127,7 +73,7 @@ describe('test that verifies that making an HTTP POST request to the /api/blogs 
 
 
 // blog without title is not added
-test('note without like-property will default to 0 likes', async () => {
+test('blog without like-property will default to 0 likes', async () => {
     const newBlog = {
         title: "Best blog",
         author: "Best Blogger",
@@ -142,6 +88,7 @@ test('note without like-property will default to 0 likes', async () => {
     const response = await api.get('/api/blogs')
   
     expect(response.body.likes).toBe(0)
+    expect(response.body).toHaveLength(helper.initialBlogs.length)
   })
 
   // delete a blog
@@ -154,7 +101,7 @@ test('note without like-property will default to 0 likes', async () => {
         .delete(`/api/blogs/${blogToDelete.id}`)
         .expect(204)
   
-      const blogsAtEnd = await helper.notesInDb()
+      const blogsAtEnd = await helper.blogsInDb()
   
       expect(blogsAtEnd).toHaveLength(
         helper.initialBlogs.length - 1
@@ -170,10 +117,10 @@ test('note without like-property will default to 0 likes', async () => {
   // test update blog
   test('test if update is ok', async () => {
     const newBlog = {
-        title: body.initialBlogs[0].title,
-        author: body.body.initialBlogs[0].author,
-        url: body.body.initialBlogs[0].url,
-        likes: body.body.initialBlogs[0].likes
+        title: body.helper.initialBlogs[0].title,
+        author: body.helper.initialBlogs[0].author,
+        url: body.helper.initialBlogs[0].url,
+        likes: body.helper.initialBlogs[0].likes
     }
 
     await api

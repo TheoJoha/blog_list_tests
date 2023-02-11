@@ -10,7 +10,22 @@ jest.setTimeout(newTimeout)
 // jest.useFakeTimers()
 
 
+
+
+beforeAll(async () => {
+mongoose
+.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+})
+.then(() => console.log("Database connected!"))
+.catch(err => console.log(err));
+})
+
+
 beforeEach(async () => {
+
   await Blog.deleteMany({})
   console.log('cleared')
 
@@ -19,6 +34,7 @@ beforeEach(async () => {
     await blogObject.save()
   }
 })
+
 
 
 describe ('returns correct resources in the JSON format', () => {

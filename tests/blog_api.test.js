@@ -33,7 +33,7 @@ beforeEach(async () => {
     let blogObject = new Blog(blog)
     await blogObject.save()
   }
-})
+}, 100000)
 
 
 

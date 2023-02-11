@@ -5,14 +5,14 @@ const app = require('../app')
 const api = supertest(app)
 
 const Blog = require('../models/blog')
-newTimeout = 100000
-jest.setTimeout(newTimeout)
+/* newTimeout = 100000
+jest.setTimeout(newTimeout) */
 // jest.useFakeTimers()
 
 
 
 
-beforeAll(async () => {
+/* beforeAll(async () => {
 mongoose
 .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -21,7 +21,7 @@ mongoose
 })
 .then(() => console.log("Database connected!"))
 .catch(err => console.log(err));
-})
+}) */
 
 
 beforeEach(async () => {

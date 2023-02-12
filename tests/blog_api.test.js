@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
+const config = require('../utils/config')
+
 
 const Blog = require('../models/blog')
 /* newTimeout = 100000
@@ -172,7 +174,7 @@ describe ('returns correct resources in the JSON format', () => {
 // close connection
   afterAll(async () => {
     await mongoose.connection.close()
-  })
+  }, 100000)
 
 
 

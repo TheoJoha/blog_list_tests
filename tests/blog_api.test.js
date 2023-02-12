@@ -38,7 +38,7 @@ mongoose
 }) 
 
 
-/* beforeEach(async () => {
+beforeEach(async () => {
 
   await Blog.deleteMany({})
   console.log('cleared')
@@ -47,11 +47,11 @@ mongoose
     let blogObject = new Blog(blog)
     await blogObject.save()
   }
-}, 100000) */
+}, 100000)
 
 
 
-/* describe ('returns correct resources in the JSON format', () => {
+describe ('returns correct resources in the JSON format', () => {
   // test that blogs are returned as JSON
   test('blogs are returned as json', async () => {
     await api
@@ -66,16 +66,16 @@ mongoose
     
       expect(response.body).toHaveLength(helper.initialBlogs.length) // set comparison-length equal to length of body.
     }, 100000)
-}) */
+})
 
 // unique identifier property of the blog posts is named id
-/* describe('unique identifier property of the blog posts is named id', () => {
+describe('unique identifier property of the blog posts is named id', () => {
     test('unique identifier property of the blog posts is named id', async () => {
         const response = await api.get('/api/blogs')
        
         expect(JSON.stringify(response[0].body._id)).toBeDefined()
       }, 100000)
-}) */
+}) 
 
 
 // test if a valid blog can be added

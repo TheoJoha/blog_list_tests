@@ -11,6 +11,17 @@ jest.setTimeout(newTimeout) */
 
 
 
+beforeAll(() => {
+    mongoose.connect(config.MONGODB_URI)
+    .then(() => {
+      logger.info('connected to MongoDB')
+    })
+    .catch((error) => {
+      logger.error('error connecting to MongoDB:', error.message)
+    })
+});
+
+
 
 /* beforeAll(async () => {
 mongoose
@@ -21,7 +32,7 @@ mongoose
 })
 .then(() => console.log("Database connected!"))
 .catch(err => console.log(err));
-}) */
+})  */
 
 
 beforeEach(async () => {

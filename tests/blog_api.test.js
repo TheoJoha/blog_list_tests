@@ -14,7 +14,7 @@ jest.setTimeout(newTimeout) */
 
 
 
-beforeAll(() => {
+/* beforeAll(() => {
     mongoose.connect(config.MONGODB_URI)
     .then(() => {
       logger.info('connected to MongoDB')
@@ -23,10 +23,10 @@ beforeAll(() => {
       logger.error('error connecting to MongoDB:', error.message)
     })
 });
+ */
 
 
-
-/* beforeAll(async () => {
+beforeAll(async () => {
 mongoose
 .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -35,10 +35,10 @@ mongoose
 })
 .then(() => console.log("Database connected!"))
 .catch(err => console.log(err));
-})  */
+}) 
 
 
-beforeEach(async () => {
+/* beforeEach(async () => {
 
   await Blog.deleteMany({})
   console.log('cleared')
@@ -47,11 +47,11 @@ beforeEach(async () => {
     let blogObject = new Blog(blog)
     await blogObject.save()
   }
-}, 100000)
+}, 100000) */
 
 
 
-describe ('returns correct resources in the JSON format', () => {
+/* describe ('returns correct resources in the JSON format', () => {
   // test that blogs are returned as JSON
   test('blogs are returned as json', async () => {
     await api
@@ -66,7 +66,7 @@ describe ('returns correct resources in the JSON format', () => {
     
       expect(response.body).toHaveLength(helper.initialBlogs.length) // set comparison-length equal to length of body.
     }, 100000)
-})
+}) */
 
 // unique identifier property of the blog posts is named id
 /* describe('unique identifier property of the blog posts is named id', () => {

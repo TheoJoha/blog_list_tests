@@ -1,4 +1,5 @@
 const supertest = require('supertest')
+const logger = require('../utils/logger')
 const mongoose = require('mongoose')
 const helper = require('./test_helper')
 const app = require('../app')

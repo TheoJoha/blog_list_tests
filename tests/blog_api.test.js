@@ -26,7 +26,7 @@ jest.setTimeout(newTimeout) */
  */
 
 
-beforeAll(async () => {
+/* beforeAll(async () => {
 mongoose
 .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -35,7 +35,7 @@ mongoose
 })
 .then(() => console.log("Database connected!"))
 .catch(err => console.log(err));
-}) 
+})  */
 
 
 beforeEach(async () => {
